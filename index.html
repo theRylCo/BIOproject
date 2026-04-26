@@ -1,0 +1,2540 @@
+```I hope you enjoy my Project!!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Biodiversity at the Edge</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg2: #0d1830;
+      --bg3: #111f3d;
+      --panel: rgba(12, 22, 44, .72);
+      --panel2: rgba(16, 29, 59, .88);
+      --line: rgba(255, 255, 255, .09);
+      --text: #eef4ff;
+      --muted: #a7b7d4;
+      --soft: #6f86aa;
+      --blue: #72b4ff;
+      --cyan: #73f0ff;
+      --green: #7df3b4;
+      --lime: #d6ff85;
+      --gold: #ffd57a;
+      --rose: #ff8ca8;
+      --orange: #ffa76a;
+      --purple: #b89cff;
+      --danger: #ff6b6b;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .35);
+      --radius: 22px;
+      --radius-sm: 16px;
+      --max: 1260px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top left, #173264 0%, transparent 30%),
+        radial-gradient(circle at top right, #17475a 0%, transparent 25%),
+        linear-gradient(180deg, #06101e 0%, #091529 28%, #081427 52%, #091426 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button, input, select { font: inherit; }
+
+    canvas#stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -3;
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.15));
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .24;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .glow-a { width: 420px; height: 420px; left: -120px; top: -80px; background: #3fb8ff; }
+    .glow-b { width: 380px; height: 380px; right: -80px; top: 22%; background: #55ffbb; }
+    .glow-c { width: 440px; height: 440px; left: 25%; bottom: -180px; background: #756cff; }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 14px;
+      z-index: 80;
+      padding-top: 14px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      background: rgba(7, 15, 30, .72);
+      backdrop-filter: blur(22px);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      display: grid;
+      place-items: center;
+      color: #021425;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(72, 255, 196, .25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .94rem;
+      transition: .25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(114,180,255,.18), rgba(125,243,180,.18));
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--text);
+      font-size: .9rem;
+    }
+
+    .hero {
+      padding: 42px 0 28px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 28px;
+      align-items: center;
+      padding: 40px 0 22px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.11);
+      background: rgba(255,255,255,.04);
+      color: var(--cyan);
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+
+    .kicker-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px var(--green);
+    }
+
+    .hero h1 {
+      margin: 16px 0 14px;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: clamp(2.9rem, 7vw, 6rem);
+      line-height: .94;
+      letter-spacing: -.05em;
+      max-width: 12ch;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--cyan), var(--green), var(--lime));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 64ch;
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.8;
+      margin: 0 0 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: .25s ease;
+      min-height: 54px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8ee7ff, #76f2bd);
+      color: #021321;
+      font-weight: 800;
+      box-shadow: 0 18px 40px rgba(100,235,208,.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 52px rgba(100,235,208,.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,.08);
+      transform: translateY(-2px);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 18px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+    }
+
+    .metric-label {
+      color: var(--soft);
+      font-size: .8rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .metric-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .metric-sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .hero-visual { position: relative; padding: 22px; }
+
+    .hero-card {
+      position: relative;
+      min-height: 690px;
+      border-radius: 36px;
+      background: linear-gradient(180deg, rgba(20,36,70,.7), rgba(12,23,46,.88));
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 18%, rgba(115,240,255,.3), transparent 28%),
+        radial-gradient(circle at 78% 24%, rgba(125,243,180,.22), transparent 24%),
+        radial-gradient(circle at 52% 82%, rgba(184,156,255,.2), transparent 25%);
+    }
+
+    .hero-sphere {
+      position: absolute;
+      inset: 70px 55px auto auto;
+      width: min(420px, 72%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 28% 24%, #cffff8 0%, #7bf2cb 12%, #1baea3 26%, #2059d7 68%, #13306d 84%, #0b1837 100%);
+      box-shadow: inset -30px -30px 80px rgba(0,0,0,.3), 0 30px 120px rgba(83,187,255,.26);
+      overflow: hidden;
+      animation: drift 8s ease-in-out infinite;
+    }
+
+    .hero-sphere::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.65), transparent 18%),
+        radial-gradient(circle at 30% 50%, rgba(255,255,255,.16), transparent 20%),
+        radial-gradient(circle at 65% 24%, rgba(255,255,255,.15), transparent 19%),
+        radial-gradient(circle at 70% 66%, rgba(255,255,255,.1), transparent 16%);
+    }
+
+    .hero-sphere::after {
+      content: "";
+      position: absolute;
+      inset: -10%;
+      background: conic-gradient(from 120deg at 50% 50%, rgba(255,255,255,.15), transparent 14%, rgba(255,255,255,.12) 28%, transparent 38%, rgba(255,255,255,.05) 55%, transparent 68%, rgba(255,255,255,.14) 82%, transparent 100%);
+      mix-blend-mode: screen;
+      opacity: .45;
+    }
+
+    .hero-overlay-card {
+      position: absolute;
+      border-radius: 24px;
+      background: rgba(9,18,38,.78);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow);
+    }
+
+    .overlay-a { left: 26px; top: 42px; width: 210px; padding: 18px; }
+    .overlay-b { left: 28px; bottom: 34px; width: 240px; padding: 18px; }
+    .overlay-c { right: 28px; bottom: 34px; width: 230px; padding: 18px; }
+
+    .overlay-label {
+      font-size: .78rem;
+      color: var(--soft);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .overlay-big {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+    }
+
+    .overlay-bar {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .overlay-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      width: 72%;
+    }
+
+    .overlay-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .overlay-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .overlay-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      font-size: .8rem;
+    }
+
+    .section { padding: 34px 0 22px; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .section-kicker {
+      color: var(--cyan);
+      font-size: .9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 8px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .section p.lead {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 72ch;
+      line-height: 1.8;
+    }
+
+    .section-tag {
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+    }
+
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .story-layout { display: grid; grid-template-columns: 1.06fr .94fr; gap: 18px; }
+    .story-panel { padding: 24px; }
+    .story-points { display: grid; gap: 16px; }
+
+    .story-point {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .story-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, rgba(115,240,255,.22), rgba(125,243,180,.22));
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .story-point h3 { margin: 0 0 6px; font-size: 1rem; }
+    .story-point p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .range-card { padding: 24px; }
+    .slider-wrap { display: grid; gap: 14px; }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .slider-value { font-size: 1.15rem; font-weight: 800; color: var(--cyan); }
+
+    input[type=range] {
+      width: 100%;
+      appearance: none;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      outline: none;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      border: 2px solid #fff;
+      box-shadow: 0 10px 20px rgba(73,230,192,.25);
+      cursor: pointer;
+    }
+
+    input[type=range]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      cursor: pointer;
+    }
+
+    .sim-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .mini-card { padding: 16px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .mini-card strong { display: block; font-size: 1.4rem; letter-spacing: -.03em; }
+    .mini-card span { display: block; margin-top: 6px; color: var(--muted); font-size: .9rem; }
+
+    .horizon {
+      position: relative;
+      height: 260px;
+      margin-top: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #123465 0%, #0b2040 55%, #0b1a29 100%);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .sun {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      right: 38px;
+      top: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff6c9 0%, #ffd87c 40%, #ffaf61 72%, transparent 73%);
+      filter: blur(.2px);
+      opacity: .95;
+    }
+
+    .mountain { position: absolute; bottom: 90px; background: linear-gradient(180deg, #203f65, #142944); }
+    .mountain.a { left: -2%; width: 52%; height: 44%; clip-path: polygon(0 100%,18% 54%,34% 68%,48% 34%,64% 56%,76% 38%,100% 100%); }
+    .mountain.b { right: -4%; width: 58%; height: 56%; clip-path: polygon(0 100%,14% 60%,28% 74%,48% 18%,66% 62%,80% 42%,100% 100%); }
+    .forestline { position: absolute; left: 0; right: 0; bottom: 76px; height: 56px; background: linear-gradient(180deg, transparent, #09131f); }
+
+    .trees {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 74px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .tree { width: 28px; height: 70px; position: relative; opacity: .88; }
+    .tree::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: 0; width: 6px; height: 22px; border-radius: 6px; background: #3d2b1f; }
+    .tree::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: 14px; width: 30px; height: 44px; clip-path: polygon(50% 0,100% 100%,0 100%); background: linear-gradient(180deg, #56c28e, #16543b); }
+    .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 92px; background: linear-gradient(180deg, #163329 0%, #0d241f 100%); }
+    .river { position: absolute; left: 30%; bottom: 0; width: 35%; height: 104px; background: linear-gradient(180deg, rgba(115,240,255,.8), rgba(47,134,246,.55)); clip-path: polygon(46% 0,64% 0,86% 100%,18% 100%); filter: drop-shadow(0 0 18px rgba(97,210,255,.28)); }
+    .wildlife { position: absolute; display: flex; gap: 12px; bottom: 16px; left: 26px; font-size: 1.8rem; }
+    .wildlife span { display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 16px; background: rgba(255,255,255,.06); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.08); }
+
+    .timeline { display: grid; grid-template-columns: 300px 1fr; gap: 18px; }
+    .timeline-list { padding: 16px; display: grid; gap: 12px; }
+
+    .era {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.04);
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .era:hover,
+    .era.active {
+      background: linear-gradient(135deg, rgba(114,180,255,.2), rgba(125,243,180,.14));
+      border-color: rgba(255,255,255,.11);
+      transform: translateY(-2px);
+    }
+
+    .era-year { color: var(--cyan); font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+    .era-title { font-weight: 700; }
+    .era-copy { margin-top: 8px; color: var(--muted); line-height: 1.6; font-size: .94rem; }
+    .timeline-stage { padding: 26px; display: grid; gap: 18px; }
+    .timeline-focus { display: grid; grid-template-columns: 1.02fr .98fr; gap: 18px; }
+
+    .timeline-visual {
+      min-height: 330px;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #13264d, #0d1d3a);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .timeline-visual .wave {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+
+    .timeline-visual .wave.a { bottom: -60px; }
+    .timeline-visual .wave.b { bottom: 10px; background: rgba(255,255,255,.06); }
+    .timeline-art { position: absolute; inset: 0; padding: 30px; display: grid; place-items: center; font-size: 7rem; opacity: .88; }
+    .timeline-info { display: grid; gap: 12px; }
+    .info-card { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .info-card h3 { margin: 0 0 8px; font-size: 1rem; }
+    .info-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pill { padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); color: var(--text); font-size: .86rem; }
+
+    .tabs { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tab { padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); cursor: pointer; color: var(--muted); font-weight: 600; transition: .25s ease; }
+    .tab.active, .tab:hover { color: var(--text); background: linear-gradient(135deg, rgba(114,180,255,.18), rgba(184,156,255,.14)); }
+    .biodiv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .biodiv-panel { padding: 24px; }
+    .viz-box { position: relative; height: 360px; border-radius: 24px; background: linear-gradient(180deg, #101f3f, #0d1b34); border: 1px solid rgba(255,255,255,.08); overflow: hidden; }
+    .dotfield { position: absolute; inset: 0; padding: 26px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; align-content: center; }
+    .dot { width: 36px; height: 36px; border-radius: 50%; margin: auto; box-shadow: 0 0 18px rgba(255,255,255,.1); }
+    .genome-grid { position: absolute; inset: 0; padding: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .helix { height: 128px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); position: relative; overflow: hidden; }
+    .helix::before, .helix::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); width: 80%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.65), transparent); }
+    .helix::before { top: 30%; }
+    .helix::after { top: 68%; }
+    .helix span { position: absolute; width: 16px; height: 16px; border-radius: 50%; }
+    .ecosystem-stage { position: absolute; inset: 0; padding: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .mini-ecosystem { border-radius: 22px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, #163c6d, #112d4e 48%, #122b1f 48%, #122b1f 100%); }
+    .mini-ecosystem .badge { position: absolute; top: 14px; left: 14px; padding: 8px 12px; border-radius: 999px; background: rgba(10,18,35,.65); border: 1px solid rgba(255,255,255,.08); font-size: .82rem; }
+    .mini-ecosystem .iconset { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; font-size: 1.7rem; }
+    .biodiv-copy h3 { margin: 0 0 8px; font-size: 1.2rem; }
+    .biodiv-copy p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .key-terms { display: grid; gap: 12px; margin-top: 16px; }
+    .term { padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .term strong { display: block; margin-bottom: 6px; }
+    .term span { color: var(--muted); line-height: 1.7; }
+
+    .hotspot-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; }
+    .map-card { padding: 18px; }
+    .map-stage { position: relative; min-height: 430px; border-radius: 24px; background: radial-gradient(circle at 50% 35%, rgba(67,130,255,.35), transparent 42%), linear-gradient(180deg, #0f1e3a, #0b1831); border: 1px solid rgba(255,255,255,.08); overflow: hidden; }
+    .map-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .95; }
+    .marker { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, var(--lime), var(--green)); box-shadow: 0 0 0 0 rgba(125,243,180,.38); animation: pulse 2.4s infinite; }
+    .marker::after { content: ""; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(255,255,255,.28); }
+    .marker[data-id="amazon"] { left: 28%; top: 46%; }
+    .marker[data-id="california"] { left: 13%; top: 34%; }
+    .marker[data-id="madagascar"] { left: 62%; top: 62%; }
+    .marker[data-id="sundaland"] { left: 76%; top: 48%; }
+    .marker[data-id="reef"] { left: 82%; top: 68%; }
+    .marker[data-id="andes"] { left: 31%; top: 57%; }
+    .marker:hover { cursor: pointer; transform: scale(1.05); }
+    .hotspot-detail { padding: 24px; display: grid; gap: 14px; }
+    .detail-title { font-size: 1.7rem; font-weight: 800; letter-spacing: -.03em; }
+    .detail-copy { color: var(--muted); line-height: 1.8; }
+    .threat-stack { display: grid; gap: 10px; }
+    .threat-line { display: grid; grid-template-columns: 120px 1fr 44px; gap: 10px; align-items: center; }
+    .bar { height: 12px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--orange), var(--rose)); }
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat-card { padding: 16px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .stat-card strong { display: block; font-size: 1.35rem; }
+
+    .sim-grid { display: grid; grid-template-columns: 350px 1fr; gap: 18px; }
+    .control-panel { padding: 22px; display: grid; gap: 16px; }
+    .control-group { display: grid; gap: 10px; padding: 16px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .control-head { display: flex; align-items: center; justify-content: space-between; }
+    .control-head span { color: var(--muted); font-size: .9rem; }
+    .segmented { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .segment { padding: 12px 10px; border-radius: 14px; text-align: center; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); cursor: pointer; transition: .25s ease; font-weight: 600; color: var(--muted); }
+    .segment.active, .segment:hover { background: linear-gradient(135deg, rgba(114,180,255,.22), rgba(125,243,180,.18)); color: var(--text); }
+    .result-panel { padding: 22px; display: grid; gap: 18px; }
+    .scoreboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .score { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
+    .score strong { display: block; font-size: 1.9rem; }
+    .score span { display: block; margin-top: 6px; color: var(--muted); }
+
+    .landscape {
+      position: relative;
+      min-height: 360px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #1d4d84 0%, #15365c 42%, #204e37 42%, #122d21 100%);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .landscape::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(255,255,255,.25), transparent 14%),
+        radial-gradient(circle at 75% 25%, rgba(255,255,255,.1), transparent 18%);
+    }
+
+    .land-hill { position: absolute; left: -5%; right: -5%; bottom: 82px; height: 180px; background: linear-gradient(180deg, #2a694b, #173824); clip-path: polygon(0 100%,15% 62%,28% 70%,38% 46%,52% 62%,66% 28%,82% 56%,100% 38%,100% 100%); }
+    .land-river { position: absolute; left: 42%; bottom: 0; width: 22%; height: 170px; background: linear-gradient(180deg, rgba(138,235,255,.78), rgba(59,152,255,.65)); clip-path: polygon(45% 0,72% 0,100% 100%,20% 100%); }
+    .cloud { position: absolute; width: 120px; height: 44px; border-radius: 999px; background: rgba(255,255,255,.16); filter: blur(1px); }
+    .cloud.a { top: 34px; left: 12%; }
+    .cloud.b { top: 70px; right: 17%; width: 96px; }
+    .land-icons { position: absolute; left: 18px; right: 18px; bottom: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .bio-token { padding: 10px 12px; border-radius: 14px; background: rgba(8,17,30,.45); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.08); font-size: 1.1rem; }
+    .health-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .health-copy { display: grid; gap: 12px; }
+    .health-copy .callout { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .health-copy .callout h3 { margin: 0 0 8px; font-size: 1rem; }
+    .health-copy .callout p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .bars { display: grid; gap: 12px; }
+    .metric-line { display: grid; grid-template-columns: 140px 1fr 50px; gap: 10px; align-items: center; }
+    .metric-track { height: 14px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .metric-track span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--green)); }
+
+    .footprint-grid { display: grid; grid-template-columns: 360px 1fr; gap: 18px; }
+    .footprint-controls { padding: 22px; display: grid; gap: 16px; }
+    .select-grid { display: grid; gap: 12px; }
+    .select-card { padding: 16px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .select-card label { display: block; margin-bottom: 10px; font-weight: 600; }
+    .select-card select { width: 100%; padding: 14px 14px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); color: var(--text); outline: none; }
+    .footprint-stage { padding: 22px; display: grid; gap: 18px; }
+    .ring-wrap { display: grid; place-items: center; min-height: 300px; }
+    .ring { width: 280px; height: 280px; border-radius: 50%; background: conic-gradient(var(--cyan) 0deg, var(--green) 180deg, var(--gold) 240deg, var(--orange) 300deg, rgba(255,255,255,.08) 300deg); display: grid; place-items: center; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+    .ring::after { content: ""; position: absolute; inset: 28px; border-radius: 50%; background: linear-gradient(180deg, #0c1931, #0a1528); border: 1px solid rgba(255,255,255,.08); }
+    .ring-content { position: relative; z-index: 2; text-align: center; padding: 0 26px; }
+    .ring-content strong { display: block; font-size: 3.2rem; letter-spacing: -.06em; }
+    .ring-content span { display: block; margin-top: 8px; color: var(--muted); }
+    .impact-breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .impact-card { padding: 16px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .impact-card strong { display: block; font-size: 1.3rem; }
+
+    .ethics-grid { display: grid; grid-template-columns: 330px 1fr; gap: 18px; }
+    .ethics-chooser { padding: 22px; display: grid; gap: 12px; }
+    .ethic { padding: 16px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); cursor: pointer; transition: .25s ease; }
+    .ethic.active, .ethic:hover { background: linear-gradient(135deg, rgba(184,156,255,.18), rgba(114,180,255,.16)); transform: translateY(-2px); }
+    .ethic h3 { margin: 0 0 8px; font-size: 1rem; }
+    .ethic p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .decision-stage { padding: 22px; display: grid; gap: 18px; }
+    .scenario { padding: 20px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .scenario h3 { margin: 0 0 8px; font-size: 1.2rem; }
+    .scenario p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .decision-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .decision { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); cursor: pointer; transition: .25s ease; text-align: left; }
+    .decision:hover, .decision.active { background: linear-gradient(135deg, rgba(125,243,180,.16), rgba(114,180,255,.18)); transform: translateY(-2px); }
+    .decision strong { display: block; margin-bottom: 6px; }
+    .decision span { color: var(--muted); line-height: 1.7; font-size: .94rem; }
+    .ethics-result { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .ethics-card { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .ethics-card h4 { margin: 0 0 8px; font-size: 1rem; }
+    .ethics-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+    .risk-grid { display: grid; grid-template-columns: 340px 1fr; gap: 18px; }
+    .species-stack { padding: 22px; display: grid; gap: 12px; }
+    .species-chip { padding: 16px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); cursor: pointer; transition: .25s ease; }
+    .species-chip.active, .species-chip:hover { background: linear-gradient(135deg, rgba(255,167,106,.16), rgba(255,140,168,.16)); transform: translateY(-2px); }
+    .species-chip strong { display: block; margin-bottom: 6px; }
+    .species-chip span { color: var(--muted); line-height: 1.6; font-size: .92rem; }
+    .risk-panel { padding: 22px; display: grid; gap: 18px; }
+    .status-banner { padding: 22px; border-radius: 22px; background: linear-gradient(135deg, rgba(255,167,106,.2), rgba(255,107,107,.2)); border: 1px solid rgba(255,255,255,.09); }
+    .status-banner .status-title { font-size: 2rem; font-weight: 900; letter-spacing: -.05em; }
+    .status-banner p { margin: 8px 0 0; color: var(--text); opacity: .9; line-height: 1.8; }
+    .risk-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .risk-control { padding: 16px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .risk-control label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-weight: 600; }
+    .risk-bars { display: grid; gap: 12px; }
+    .risk-badge { display: inline-flex; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.09); font-size: .9rem; }
+
+    .budget-grid { display: grid; grid-template-columns: 360px 1fr; gap: 18px; }
+    .budget-panel { padding: 22px; display: grid; gap: 14px; }
+    .budget-line { padding: 16px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .budget-line label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-weight: 600; }
+    .budget-total { padding: 18px; border-radius: 18px; background: linear-gradient(135deg, rgba(114,180,255,.18), rgba(125,243,180,.18)); border: 1px solid rgba(255,255,255,.08); }
+    .budget-stage { padding: 22px; display: grid; gap: 18px; }
+    .budget-score { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .ending { padding: 24px; border-radius: 22px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); }
+    .ending h3 { margin: 0 0 10px; font-size: 1.5rem; }
+    .ending p { margin: 0; color: var(--muted); line-height: 1.8; }
+
+    .quiz-grid { display: grid; grid-template-columns: 1fr 320px; gap: 18px; }
+    .quiz-panel { padding: 22px; display: grid; gap: 16px; }
+    .question { padding: 18px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+    .question h3 { margin: 0 0 12px; font-size: 1.05rem; }
+    .options { display: grid; gap: 10px; }
+    .option { padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07); cursor: pointer; transition: .25s ease; color: var(--muted); }
+    .option:hover { color: var(--text); background: rgba(255,255,255,.08); }
+    .option.correct { background: rgba(125,243,180,.14); border-color: rgba(125,243,180,.35); color: var(--text); }
+    .option.wrong { background: rgba(255,107,107,.14); border-color: rgba(255,107,107,.35); color: var(--text); }
+    .quiz-side { padding: 22px; display: grid; gap: 18px; align-content: start; }
+    .score-ring { width: 220px; height: 220px; border-radius: 50%; margin-inline: auto; background: conic-gradient(var(--cyan) 0deg, rgba(255,255,255,.08) 0deg); display: grid; place-items: center; position: relative; }
+    .score-ring::after { content: ""; position: absolute; inset: 22px; border-radius: 50%; background: #0a1529; border: 1px solid rgba(255,255,255,.08); }
+    .score-center { position: relative; z-index: 2; text-align: center; }
+    .score-center strong { display: block; font-size: 2.8rem; }
+
+    .footer { padding: 40px 0 60px; }
+    .footer-card { padding: 26px; border-radius: 28px; background: linear-gradient(135deg, rgba(114,180,255,.16), rgba(125,243,180,.14)); border: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .footer-card h3 { margin: 0; font-size: 1.6rem; }
+    .footer-card p { margin: 8px 0 0; color: #e8f3ff; opacity: .9; max-width: 70ch; line-height: 1.8; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(4deg); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(125,243,180,.36); }
+      70% { box-shadow: 0 0 0 18px rgba(125,243,180,0); }
+      100% { box-shadow: 0 0 0 0 rgba(125,243,180,0); }
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .story-layout,
+      .timeline,
+      .timeline-focus,
+      .biodiv-layout,
+      .hotspot-layout,
+      .sim-grid,
+      .footprint-grid,
+      .ethics-grid,
+      .risk-grid,
+      .budget-grid,
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .scoreboard,
+      .budget-score,
+      .risk-controls,
+      .decision-buttons,
+      .health-grid,
+      .impact-breakdown,
+      .hero-metrics,
+      .sim-metrics {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav { border-radius: 28px; }
+      .nav-links { display: none; }
+      .hero-card { min-height: 520px; }
+      .hero-sphere { inset: 56px 38px auto auto; width: min(320px, 66%); }
+      .overlay-a, .overlay-b, .overlay-c { transform: scale(.94); }
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(var(--max), calc(100% - 24px)); }
+      .hero h1 { max-width: none; }
+      .scoreboard,
+      .budget-score,
+      .risk-controls,
+      .decision-buttons,
+      .impact-breakdown,
+      .hero-metrics,
+      .sim-metrics,
+      .stat-row,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .segment,
+      .tab,
+      .btn,
+      .status-pill {
+        font-size: .94rem;
+      }
+
+      .nav { padding: 12px 14px; }
+      .hero-card { min-height: 460px; }
+      .hero-sphere { width: min(250px, 62%); }
+      .overlay-a, .overlay-b, .overlay-c { position: absolute; left: 18px; right: 18px; width: auto; }
+      .overlay-a { top: 18px; }
+      .overlay-b { bottom: 100px; }
+      .overlay-c { bottom: 18px; }
+      .timeline-art { font-size: 4.8rem; }
+      .ring { width: 240px; height: 240px; }
+      .score-ring { width: 190px; height: 190px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="bg-grid"></div>
+  <div class="glow-orb glow-a"></div>
+  <div class="glow-orb glow-b"></div>
+  <div class="glow-orb glow-c"></div>
+
+  <div class="container nav-wrap">
+    <nav class="nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark">∞</span>
+        <span>Biodiversity at the Edge</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#history">History</a>
+        <a href="#biodiversity">Biodiversity</a>
+        <a href="#simulator">Simulator</a>
+        <a href="#ethics">Ethics</a>
+        <a href="#challenge">Challenge</a>
+      </div>
+
+      <div class="nav-cta">
+        <span class="status-pill">Biodiversity and conservation</span>
+      </div>
+    </nav>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <div class="kicker">
+          <span class="kicker-dot"></span>
+          Biodiversity, Extinction, and Conservation
+        </div>
+
+        <h1>Can we <span>slow extinction</span> before ecosystems unravel?</h1>
+
+        <p>
+          Human population growth, land conversion, overexploitation, pollution, invasive species, and climate change increase extinction risk across species, populations, and ecosystems.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#simulator">Launch ecosystem simulator</a>
+          <a class="btn btn-secondary" href="#challenge">Try conservation challenge</a>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-label">Core theme</div>
+            <div class="metric-value">Anthropocene</div>
+            <div class="metric-sub">Human population growth and resource use intensify biodiversity loss.</div>
+          </div>
+
+          <div class="metric">
+            <div class="metric-label">Framework</div>
+            <div class="metric-value">Species → Genes → Ecosystems</div>
+            <div class="metric-sub">All levels of biodiversity interact and change through time.</div>
+          </div>
+
+          <div class="metric">
+            <div class="metric-label">Goal</div>
+            <div class="metric-value">Prevent extinction</div>
+            <div class="metric-sub">Use science, ethics, management, and policy to protect ecological communities.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="hero-card">
+          <div class="hero-sphere"></div>
+
+          <div class="hero-overlay-card overlay-a">
+            <div class="overlay-label">Live project lens</div>
+            <div class="overlay-big">Biodiversity</div>
+            <div class="overlay-bar"><div class="overlay-fill"></div></div>
+
+            <div class="overlay-list">
+              <div class="overlay-row"><span>Species diversity</span><span class="overlay-chip">richness + evenness</span></div>
+              <div class="overlay-row"><span>Genetic diversity</span><span class="overlay-chip">adaptive capacity</span></div>
+              <div class="overlay-row"><span>Ecosystem diversity</span><span class="overlay-chip">function + resilience</span></div>
+            </div>
+          </div>
+
+          <div class="hero-overlay-card overlay-b">
+            <div class="overlay-label">Why conservation exists</div>
+            <div class="overlay-row"><span>Habitat loss</span><span>High</span></div>
+            <div class="overlay-row"><span>Overexploitation</span><span>High</span></div>
+            <div class="overlay-row"><span>Pollution</span><span>Rising</span></div>
+            <div class="overlay-row"><span>Climate stress</span><span>Rising</span></div>
+          </div>
+
+          <div class="hero-overlay-card overlay-c">
+            <div class="overlay-label">Project style</div>
+            <div class="overlay-row"><span>Interactive</span><span>Yes</span></div>
+            <div class="overlay-row"><span>Visually polished</span><span>Yes</span></div>
+            <div class="overlay-row"><span>Class-tailored</span><span>Yes</span></div>
+            <div class="overlay-row"><span>Single-file code</span><span>Yes</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="problem">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Intro to conservation biology</div>
+            <h2>The problem driving conservation</h2>
+            <p class="lead">
+              Conservation biology emerges because human activity changes land,
+              water, climate, and wildlife faster than many populations can
+              adapt. Slide the year to see how the project frames the human
+              pressure story.
+            </p>
+          </div>
+          <div class="section-tag">Population growth • resource use • extinction risk</div>
+        </div>
+
+        <div class="story-layout">
+          <div class="panel story-panel reveal">
+            <div class="story-points">
+              <div class="story-point">
+                <div class="story-icon">🌍</div>
+                <div>
+                  <h3>Humans are a dominant ecological force</h3>
+                  <p>As population and per-capita consumption rise, habitat conversion, pollution, climate forcing, and wildlife conflict become more intense.</p>
+                </div>
+              </div>
+
+              <div class="story-point">
+                <div class="story-icon">🌲</div>
+                <div>
+                  <h3>Other species need the same resources</h3>
+                  <p>Forests, freshwater, coastlines, and agricultural landscapes are not empty space. They are living systems with competing demands.</p>
+                </div>
+              </div>
+
+              <div class="story-point">
+                <div class="story-icon">🧬</div>
+                <div>
+                  <h3>Conservation is multidisciplinary</h3>
+                  <p>Ecology, genetics, taxonomy, policy, management, and ethics all shape how we protect species and ecosystems.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel range-card reveal">
+            <div class="slider-wrap">
+              <div class="slider-label">
+                <strong>Move through time</strong>
+                <span class="slider-value" id="yearValue">2025</span>
+              </div>
+
+              <input type="range" min="1850" max="2100" step="1" value="2025" id="yearSlider" />
+
+              <div class="sim-metrics">
+                <div class="mini-card"><strong id="popValue">8.2B</strong><span>Approximate global population</span></div>
+                <div class="mini-card"><strong id="habitatValue">58%</strong><span>Estimated intact habitat indicator</span></div>
+                <div class="mini-card"><strong id="pressureValue">High</strong><span>Human pressure level</span></div>
+              </div>
+
+              <div class="horizon">
+                <div class="sun"></div>
+                <div class="mountain a mountain"></div>
+                <div class="mountain b mountain"></div>
+                <div class="forestline"></div>
+                <div class="trees" id="trees"></div>
+                <div class="ground"></div>
+                <div class="river"></div>
+                <div class="wildlife" id="wildlifeIcons">
+                  <span>🦌</span><span>🦅</span><span>🐸</span><span>🦊</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="history">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">History of conservation in the US</div>
+            <h2>From exploitation to science-based management</h2>
+            <p class="lead">
+              This timeline follows major shifts from unregulated exploitation to public trust doctrine, federal protection, professional wildlife management, environmental law, and endangered species recovery.
+            </p>
+          </div>
+          <div class="section-tag">Public trust • Lacey Act • refuges • ESA</div>
+        </div>
+
+        <div class="timeline">
+          <div class="panel timeline-list reveal" id="timelineList"></div>
+          <div class="panel timeline-stage reveal">
+            <div class="timeline-focus">
+              <div class="timeline-visual" id="timelineVisual">
+                <div class="wave a"></div>
+                <div class="wave b"></div>
+                <div class="timeline-art" id="timelineEmoji">🦬</div>
+              </div>
+
+              <div class="timeline-info">
+                <div class="info-card">
+                  <div class="section-kicker" style="margin: 0 0 8px">Current focus</div>
+                  <h3 id="timelineTitle">Age of exploitation</h3>
+                  <p id="timelineCopy">Unregulated commercialization, predator eradication, and habitat conversion drove severe wildlife declines.</p>
+                </div>
+
+                <div class="info-card">
+                  <h3>Why it matters</h3>
+                  <p id="timelineWhy">This is the baseline problem that explains why later conservation laws and scientific management became necessary.</p>
+                </div>
+
+                <div class="info-card">
+                  <h3>Key ideas</h3>
+                  <div class="pill-row" id="timelinePills"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="biodiversity">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Biodiversity levels and scales</div>
+            <h2>Species, genes, ecosystems, and function</h2>
+            <p class="lead">
+              Biodiversity includes variation at species, genetic, ecosystem, and functional levels. Richness, evenness, adaptive variation, ecological interactions, and ecosystem processes all shape stability and resilience.
+            </p>
+          </div>
+          <div class="section-tag">Species diversity • phylogenetic diversity • genetic diversity • food webs</div>
+        </div>
+
+        <div class="tabs reveal" id="biodivTabs">
+          <button class="tab active" data-tab="species">Species diversity</button>
+          <button class="tab" data-tab="genetic">Genetic diversity</button>
+          <button class="tab" data-tab="ecosystem">Ecosystem diversity</button>
+          <button class="tab" data-tab="function">Functional diversity</button>
+        </div>
+
+        <div class="biodiv-layout">
+          <div class="panel biodiv-panel reveal">
+            <div class="viz-box" id="biodivViz"></div>
+          </div>
+
+          <div class="panel biodiv-panel reveal">
+            <div class="biodiv-copy">
+              <h3 id="biodivTitle">Species diversity</h3>
+              <p id="biodivText">Species diversity combines richness and evenness. A community with many species that are more evenly distributed is generally more diverse than one dominated by only a few.</p>
+              <div class="key-terms" id="termList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="hotspots">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Global scales</div>
+            <h2>Biodiversity is not evenly distributed</h2>
+            <p class="lead">
+              Click a hotspot to explore why some regions are exceptionally rich in endemism while also facing extreme human pressure and conservation urgency.
+            </p>
+          </div>
+          <div class="section-tag">Hotspots • endemism • threats • conservation prioritization</div>
+        </div>
+
+        <div class="hotspot-layout">
+          <div class="panel map-card reveal">
+            <div class="map-stage">
+              <svg viewBox="0 0 1000 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M133 160C162 111 249 93 305 88C362 83 381 72 447 104C500 130 569 145 624 142C702 138 814 146 867 183C932 229 918 287 856 323C786 364 709 352 647 362C582 372 512 420 430 418C359 416 293 380 235 364C181 349 106 327 90 268C79 228 97 201 133 160Z" fill="rgba(74,133,255,.16)" stroke="rgba(255,255,255,.16)"/>
+                <path d="M188 168C228 152 255 153 290 168C315 179 352 195 374 209C420 239 440 245 480 246C527 246 572 226 596 202C626 173 657 160 710 164C763 168 825 190 858 220" stroke="rgba(255,255,255,.14)" stroke-width="2" stroke-dasharray="6 8"/>
+                <path d="M281 326C320 342 364 356 421 358C495 361 575 340 649 314C706 294 773 291 840 303" stroke="rgba(255,255,255,.14)" stroke-width="2" stroke-dasharray="6 8"/>
+              </svg>
+
+              <div class="marker" data-id="amazon" title="Amazon"></div>
+              <div class="marker" data-id="california" title="California Floristic Province"></div>
+              <div class="marker" data-id="madagascar" title="Madagascar"></div>
+              <div class="marker" data-id="sundaland" title="Sundaland"></div>
+              <div class="marker" data-id="reef" title="Coral Reef Arc"></div>
+              <div class="marker" data-id="andes" title="Tropical Andes"></div>
+            </div>
+          </div>
+
+          <div class="panel hotspot-detail reveal">
+            <div class="detail-title" id="hotspotTitle">Amazon Basin</div>
+            <div class="detail-copy" id="hotspotCopy">A globally important reservoir of species richness, ecological interactions, and climate regulation, yet increasingly stressed by deforestation, fragmentation, fire, and development.</div>
+            <div class="stat-row" id="hotspotStats"></div>
+            <div class="threat-stack" id="hotspotThreats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="simulator">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Ecology + extinction risk + management</div>
+            <h2>Build an ecosystem and test whether it holds</h2>
+            <p class="lead">
+              Biome condition depends on habitat protection, climate stress, pollution, harvest pressure, connectivity, and invasive species. These factors affect biodiversity health, ecosystem services, resilience, and extinction pressure.
+            </p>
+          </div>
+          <div class="section-tag">Food webs • keystone species • habitat fragmentation • conservation strategy</div>
+        </div>
+
+        <div class="sim-grid">
+          <div class="panel control-panel reveal">
+            <div class="control-group">
+              <div class="control-head"><strong>Biome</strong><span id="biomeLabel">Temperate forest</span></div>
+              <div class="segmented" id="biomeButtons">
+                <button class="segment active" data-biome="forest">Forest</button>
+                <button class="segment" data-biome="wetland">Wetland</button>
+                <button class="segment" data-biome="grassland">Grassland</button>
+                <button class="segment" data-biome="reef">Reef</button>
+              </div>
+            </div>
+
+            <div class="control-group"><div class="control-head"><strong>Habitat protection</strong><span id="protectVal">70</span></div><input type="range" id="protect" min="0" max="100" value="70" /></div>
+            <div class="control-group"><div class="control-head"><strong>Climate stress</strong><span id="climateVal">45</span></div><input type="range" id="climate" min="0" max="100" value="45" /></div>
+            <div class="control-group"><div class="control-head"><strong>Pollution</strong><span id="pollutionVal">30</span></div><input type="range" id="pollution" min="0" max="100" value="30" /></div>
+            <div class="control-group"><div class="control-head"><strong>Hunting / harvest pressure</strong><span id="huntingVal">25</span></div><input type="range" id="hunting" min="0" max="100" value="25" /></div>
+            <div class="control-group"><div class="control-head"><strong>Connectivity / corridors</strong><span id="connectVal">60</span></div><input type="range" id="connect" min="0" max="100" value="60" /></div>
+            <div class="control-group"><div class="control-head"><strong>Invasive pressure</strong><span id="invasiveVal">28</span></div><input type="range" id="invasive" min="0" max="100" value="28" /></div>
+          </div>
+
+          <div class="panel result-panel reveal">
+            <div class="scoreboard">
+              <div class="score"><strong id="scoreBiodiversity">74</strong><span>Biodiversity health</span></div>
+              <div class="score"><strong id="scoreServices">79</strong><span>Ecosystem services</span></div>
+              <div class="score"><strong id="scoreResilience">71</strong><span>Resilience</span></div>
+              <div class="score"><strong id="scoreRisk">Medium</strong><span>Extinction pressure</span></div>
+            </div>
+
+            <div class="landscape" id="landscape">
+              <div class="cloud a"></div>
+              <div class="cloud b"></div>
+              <div class="land-hill"></div>
+              <div class="land-river"></div>
+              <div class="land-icons" id="landIcons"></div>
+            </div>
+
+            <div class="health-grid">
+              <div class="bars" id="healthBars"></div>
+              <div class="health-copy">
+                <div class="callout">
+                  <h3>System diagnosis</h3>
+                  <p id="systemDiagnosis">A relatively stable forest still supports diverse consumers, decomposers, and ecosystem services, but climate and fragmentation pressures are beginning to erode resilience.</p>
+                </div>
+
+                <div class="callout">
+                  <h3>Keystone warning</h3>
+                  <p id="keystoneNote">When top predators or critical habitat engineers disappear, indirect effects can ripple through the whole food web.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="footprint">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Measuring and valuing biodiversity</div>
+            <h2>Estimate an ecological footprint</h2>
+            <p class="lead">
+              Ecological footprint estimates the land, energy, and resource demand associated with consumption patterns such as diet, transportation, housing, and material use.
+            </p>
+          </div>
+          <div class="section-tag">Consumption • land demand • quality of life tradeoffs</div>
+        </div>
+
+        <div class="footprint-grid">
+          <div class="panel footprint-controls reveal">
+            <div class="select-grid">
+              <div class="select-card"><label for="diet">Diet</label><select id="diet"><option value="1.3">Plant-forward</option><option value="1.8" selected>Mixed diet</option><option value="2.4">High meat</option></select></div>
+              <div class="select-card"><label for="transport">Transport</label><select id="transport"><option value="1.1">Walk / bike / transit</option><option value="1.7" selected>Moderate driving</option><option value="2.5">Frequent driving + flights</option></select></div>
+              <div class="select-card"><label for="home">Home energy</label><select id="home"><option value="1.0">Efficient apartment</option><option value="1.5" selected>Average household</option><option value="2.2">Large high-use home</option></select></div>
+              <div class="select-card"><label for="shopping">Consumption</label><select id="shopping"><option value=".9">Low purchases</option><option value="1.4" selected>Average purchases</option><option value="2.1">High material consumption</option></select></div>
+            </div>
+
+            <a class="btn btn-secondary" id="footprintReset">Reset to baseline</a>
+          </div>
+
+          <div class="panel footprint-stage reveal">
+            <div class="ring-wrap">
+              <div class="ring" id="footRing">
+                <div class="ring-content">
+                  <strong id="earths">2.8</strong>
+                  <span>Earths if everyone lived this way</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="impact-breakdown" id="impactBreakdown"></div>
+
+            <div class="callout" style="padding:18px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
+              <h3 style="margin:0 0 8px">Interpretation</h3>
+              <p id="footInterpretation" style="margin:0;color:var(--muted);line-height:1.8">This lifestyle requires more land, energy, and ecosystem throughput than a globally equitable low-footprint baseline.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ethics">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Environmental ethics</div>
+            <h2>How should conservation decisions be judged?</h2>
+            <p class="lead">
+              Conservation decisions involve scientific evidence and ethical reasoning. Different frameworks weigh human benefit, ecological integrity, non-human value, and long-term system stability in different ways.
+            </p>
+          </div>
+          <div class="section-tag">Intrinsic value • use value • utilitarianism • preservation • land ethic</div>
+        </div>
+
+        <div class="ethics-grid">
+          <div class="panel ethics-chooser reveal" id="ethicChoices"></div>
+
+          <div class="panel decision-stage reveal">
+            <div class="scenario">
+              <h3>Scenario: mountain valley dam replacement</h3>
+              <p>
+                A major reservoir supplies water and electricity to nearby communities,
+                but aging infrastructure forces a choice: rebuild and intensify the system,
+                partially restore the valley while maintaining reduced water storage,
+                or fully remove the dam and prioritize ecosystem recovery.
+              </p>
+            </div>
+
+            <div class="decision-buttons" id="decisionButtons"></div>
+
+            <div class="ethics-result">
+              <div class="ethics-card">
+                <h4>Framework reading</h4>
+                <p id="ethicsFrameworkText">A utilitarian lens weighs aggregate benefits and harms across stakeholders.</p>
+              </div>
+
+              <div class="ethics-card">
+                <h4>Decision result</h4>
+                <p id="ethicsDecisionText">Under this framework, a partial restoration path may balance human needs with ecological repair.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="risk">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Extinction risk</div>
+            <h2>Move a species toward safety or collapse</h2>
+            <p class="lead">
+              Range size, population trend, and habitat connectivity strongly influence extinction risk and help explain shifts in conservation status.
+            </p>
+          </div>
+          <div class="section-tag">Population decline • restricted range • fragmentation • listing status</div>
+        </div>
+
+        <div class="risk-grid">
+          <div class="panel species-stack reveal" id="speciesStack"></div>
+
+          <div class="panel risk-panel reveal">
+            <div class="status-banner">
+              <div class="status-title" id="riskStatus">Endangered</div>
+              <p id="riskSummary">This species has a rapidly shrinking population and fragmented habitat, placing it at very high risk without intervention.</p>
+            </div>
+
+            <div class="risk-controls">
+              <div class="risk-control"><label><span>Population trend</span><span id="trendVal">32</span></label><input type="range" id="trend" min="0" max="100" value="32" /></div>
+              <div class="risk-control"><label><span>Range size</span><span id="rangeVal">28</span></label><input type="range" id="range" min="0" max="100" value="28" /></div>
+              <div class="risk-control"><label><span>Habitat connectivity</span><span id="fragVal">30</span></label><input type="range" id="frag" min="0" max="100" value="30" /></div>
+            </div>
+
+            <div class="risk-bars" id="riskBars"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="challenge">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Final challenge</div>
+            <h2>Spend 100 conservation points wisely</h2>
+            <p class="lead">
+              Conservation outcomes depend on how limited resources are distributed across habitat protection, restoration, research, enforcement, community incentives, and species-specific intervention.
+            </p>
+          </div>
+          <div class="section-tag">Restoration • research • law • habitat • community support</div>
+        </div>
+
+        <div class="budget-grid">
+          <div class="panel budget-panel reveal">
+            <div class="budget-line"><label><span>Habitat protection</span><span id="b1">25</span></label><input type="range" id="budget1" min="0" max="100" value="25" /></div>
+            <div class="budget-line"><label><span>Restoration</span><span id="b2">20</span></label><input type="range" id="budget2" min="0" max="100" value="20" /></div>
+            <div class="budget-line"><label><span>Research and monitoring</span><span id="b3">15</span></label><input type="range" id="budget3" min="0" max="100" value="15" /></div>
+            <div class="budget-line"><label><span>Anti-poaching / law enforcement</span><span id="b4">15</span></label><input type="range" id="budget4" min="0" max="100" value="15" /></div>
+            <div class="budget-line"><label><span>Community incentives</span><span id="b5">15</span></label><input type="range" id="budget5" min="0" max="100" value="15" /></div>
+            <div class="budget-line"><label><span>Captive breeding</span><span id="b6">10</span></label><input type="range" id="budget6" min="0" max="100" value="10" /></div>
+
+            <div class="budget-total">
+              <strong id="budgetTotal">100 / 100</strong>
+              <div style="margin-top:8px;color:var(--text);opacity:.92">Stay at or below 100 points for a viable plan.</div>
+            </div>
+          </div>
+
+          <div class="panel budget-stage reveal">
+            <div class="budget-score">
+              <div class="score"><strong id="outSpecies">78</strong><span>Species recovery</span></div>
+              <div class="score"><strong id="outHabitat">82</strong><span>Habitat integrity</span></div>
+              <div class="score"><strong id="outJustice">74</strong><span>Social durability</span></div>
+              <div class="score"><strong id="outLongterm">80</strong><span>Long-term resilience</span></div>
+            </div>
+
+            <div class="ending">
+              <h3 id="endingTitle">Balanced conservation strategy</h3>
+              <p id="endingCopy">Your plan invests across habitat, restoration, science, and local support. It does not maximize a single short-term metric, but it creates a durable system capable of protecting biodiversity over time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-kicker">Quick knowledge check</div>
+            <h2>Use the project like a study tool</h2>
+            <p class="lead">
+              These review questions cover biodiversity levels, keystone species, overexploitation, ethical frameworks, species diversity, and habitat connectivity.
+            </p>
+          </div>
+          <div class="section-tag">Review • active learning • concept integration</div>
+        </div>
+
+        <div class="quiz-grid">
+          <div class="panel quiz-panel reveal" id="quizPanel"></div>
+
+          <div class="panel quiz-side reveal">
+            <div class="score-ring" id="quizRing">
+              <div class="score-center">
+                <strong id="quizScore">0/6</strong>
+                <span style="color:var(--muted)">answered correctly</span>
+              </div>
+            </div>
+
+            <a class="btn btn-primary" id="resetQuiz">Reset quiz</a>
+
+            <div class="callout" style="padding:18px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
+              <h3 style="margin:0 0 8px">Key conservation themes</h3>
+              <p style="margin:0;color:var(--muted);line-height:1.8">
+                Major topics include human pressure, biodiversity structure, ecological interdependence, conservation history, extinction risk, ecosystem services, and ethical tradeoffs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-card reveal">
+        <div>
+          <h3>Biodiversity, extinction risk, and conservation strategy</h3>
+          <p>
+            Topics include human pressure on ecosystems, conservation history, biodiversity across scales, ecological function, hotspot prioritization, extinction risk, environmental ethics, and applied management tradeoffs.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="#top">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const timelineData = [
+      {
+        id: 'exploit',
+        year: 'Colonial era to 1890',
+        title: 'Age of exploitation',
+        emoji: '🦬',
+        copy: 'Unregulated market hunting, predator eradication, and habitat conversion drove many species to severe decline or extinction.',
+        why: 'This period shows how unmanaged extraction can collapse populations and why conservation regulation emerged.',
+        pills: ['market hunting', 'habitat destruction', 'near extinctions']
+      },
+      {
+        id: 'dawn',
+        year: '1890 to 1909',
+        title: 'Dawn of conservation',
+        emoji: '🦅',
+        copy: 'The federal government took a larger role, commercial hunting was constrained, and Theodore Roosevelt expanded land protection.',
+        why: 'The shift marks a move from pure extraction toward public stewardship and protected habitat.',
+        pills: ['Lacey Act', 'Antiquities Act', 'Pelican Island Refuge']
+      },
+      {
+        id: 'professional',
+        year: '1930 to 1940',
+        title: 'Rise of professional wildlife management',
+        emoji: '🧭',
+        copy: 'Scientific foundations, agencies, funding tools, and professional societies gave wildlife management a durable infrastructure.',
+        why: 'Science became central to wildlife policy, monitoring, restoration, and long-term planning.',
+        pills: ['Duck Stamp Act', 'Pittman-Robertson', 'USFWS']
+      },
+      {
+        id: 'movement',
+        year: '1960 to 1980',
+        title: 'Environmental movement',
+        emoji: '📘',
+        copy: 'Modern environmental law expanded protection beyond game species, emphasizing ecosystems, pollution control, and endangered wildlife.',
+        why: 'This era broadened conservation from resource use to biodiversity and ecosystem protection.',
+        pills: ['Silent Spring', 'Wilderness Act', 'Endangered Species Act']
+      },
+      {
+        id: 'modern',
+        year: 'Now',
+        title: 'Modern conservation biology',
+        emoji: '🧬',
+        copy: 'The central goals are preventing extinction, maintaining biodiversity, understanding human impacts, and restoring ecological function.',
+        why: 'Today conservation blends ecology, genetics, policy, ethics, and community-based management.',
+        pills: ['multidisciplinary', 'restoration', 'collaboration']
+      }
+    ];
+
+    const biodiversityInfo = {
+      species: {
+        title: 'Species diversity',
+        text: 'Species diversity combines richness and evenness. In community ecology, a site with many species that are more equally represented is more diverse than one dominated by only a few.',
+        terms: [
+          ['Richness', 'How many species are present in a community.'],
+          ['Evenness', 'How balanced the abundances of those species are.'],
+          ['Phylogeny link', 'Species diversity can be extended by asking how evolutionarily distinct those species are.']
+        ]
+      },
+      genetic: {
+        title: 'Genetic diversity',
+        text: 'Genetic diversity captures variation within a species. High variation improves adaptive potential, while low variation can intensify inbreeding and reduce long-term viability.',
+        terms: [
+          ['Alleles', 'Different versions of the same gene.'],
+          ['Adaptive capacity', 'Genetic variation gives populations more potential responses to changing environments.'],
+          ['Conservation genetics', 'Genetic data help assess health, identify cryptic species, and track trafficking.']
+        ]
+      },
+      ecosystem: {
+        title: 'Ecosystem diversity',
+        text: 'Ecosystem diversity includes communities plus the abiotic environment and the processes linking them. Energy flow, nutrient cycling, and species interactions all matter.',
+        terms: [
+          ['Food webs', 'Real ecosystems are networks, not simple linear food chains.'],
+          ['Abiotic context', 'Water, soil, temperature, and atmosphere shape what communities can persist.'],
+          ['Disturbance', 'Diverse ecosystems are often less sensitive to disturbance.']
+        ]
+      },
+      function: {
+        title: 'Functional diversity',
+        text: 'Functional diversity focuses on what organisms do: pollinate, decompose, engineer habitat, graze, prey, disperse seeds, and stabilize nutrient flows. Different roles create ecosystem resilience.',
+        terms: [
+          ['Keystone species', 'Some species have impacts much larger than their abundance suggests.'],
+          ['Ecosystem services', 'Healthy systems support pollination, water purification, climate regulation, and more.'],
+          ['Redundancy and resilience', 'Multiple species performing similar functions can buffer disturbance.']
+        ]
+      }
+    };
+
+    const hotspotInfo = {
+      amazon: {
+        title: 'Amazon Basin',
+        copy: 'A vast forest system with extraordinary species richness, major carbon storage, and immense hydrological importance. High biodiversity coexists with major pressures from deforestation and fragmentation.',
+        stats: [['Endemism', 'Very high'], ['Main threat', 'Deforestation'], ['Priority', 'Global']],
+        threats: [['Habitat loss', 88], ['Fire', 74], ['Road expansion', 66], ['Climate stress', 61]]
+      },
+      california: {
+        title: 'California Floristic Province',
+        copy: 'A locally relevant hotspot with strong endemism, intense urban and agricultural pressure, and major conservation importance across coast, chaparral, oak woodland, and montane systems.',
+        stats: [['Endemism', 'High'], ['Main threat', 'Development'], ['Priority', 'Regional + global']],
+        threats: [['Urban growth', 83], ['Fragmentation', 79], ['Water stress', 67], ['Invasive species', 62]]
+      },
+      madagascar: {
+        title: 'Madagascar',
+        copy: 'A classic hotspot with exceptional endemism due to isolation. Habitat conversion and resource extraction threaten many lineages found nowhere else.',
+        stats: [['Endemism', 'Extremely high'], ['Main threat', 'Habitat conversion'], ['Priority', 'Very high']],
+        threats: [['Forest clearing', 90], ['Fuelwood demand', 72], ['Poverty-linked pressure', 70], ['Climate stress', 56]]
+      },
+      sundaland: {
+        title: 'Sundaland',
+        copy: 'An exceptionally diverse tropical region where deforestation, palm oil expansion, and wildlife trade threaten highly distinctive communities.',
+        stats: [['Endemism', 'Very high'], ['Main threat', 'Conversion'], ['Priority', 'Very high']],
+        threats: [['Deforestation', 91], ['Trade pressure', 68], ['Fragmentation', 77], ['Pollution', 49]]
+      },
+      reef: {
+        title: 'Coral reef arc',
+        copy: 'Coral systems support immense species interactions and ecosystem services, but warming, acidification, pollution, and overuse can drive rapid collapse.',
+        stats: [['Endemism', 'High'], ['Main threat', 'Climate stress'], ['Priority', 'Critical']],
+        threats: [['Bleaching risk', 94], ['Acidification', 82], ['Overfishing', 66], ['Pollution', 59]]
+      },
+      andes: {
+        title: 'Tropical Andes',
+        copy: 'A mountain hotspot with steep environmental gradients, high endemism, and strong sensitivity to land-use change and climate shifts.',
+        stats: [['Endemism', 'Extremely high'], ['Main threat', 'Slope conversion'], ['Priority', 'Very high']],
+        threats: [['Agricultural expansion', 80], ['Climate shift', 78], ['Roads', 59], ['Fragmentation', 71]]
+      }
+    };
+
+    const biomeInfo = {
+      forest: {
+        label: 'Temperate forest',
+        icons: ['🦌', '🦅', '🦊', '🐸', '🍄', '🌲'],
+        keystone: 'Top predators and cavity-forming old trees stabilize the food web and habitat structure.',
+        bias: { b: 12, s: 10, r: 9 }
+      },
+      wetland: {
+        label: 'Wetland mosaic',
+        icons: ['🦆', '🐟', '🐸', '🪰', '🪷', '🦫'],
+        keystone: 'Hydrology and engineering species can determine nutrient cycling, flood buffering, and breeding habitat.',
+        bias: { b: 9, s: 12, r: 12 }
+      },
+      grassland: {
+        label: 'Grassland system',
+        icons: ['🦬', '🦗', '🦊', '🦅', '🌾', '🐍'],
+        keystone: 'Large grazers, burrowing species, and predators shape disturbance, vegetation pattern, and trophic structure.',
+        bias: { b: 10, s: 8, r: 10 }
+      },
+      reef: {
+        label: 'Coral reef',
+        icons: ['🐠', '🪸', '🦀', '🐢', '🦈', '🌊'],
+        keystone: 'Reef-building corals and top consumers anchor the structure and dynamics of the entire system.',
+        bias: { b: 8, s: 11, r: 7 }
+      }
+    };
+
+    const ethicsInfo = [
+      {
+        id: 'utilitarian',
+        title: 'Consequential / utilitarian',
+        text: 'Actions are judged by outcomes. A good choice seeks the greatest net benefit, often weighing human welfare heavily.',
+        result: {
+          rebuild: 'This framework may support rebuilding if water, safety, and energy gains outweigh ecological losses.',
+          partial: 'This framework often favors partial restoration if it preserves major human benefits while reducing ecological damage.',
+          remove: 'This framework supports removal when long-term ecological and social gains exceed short-term infrastructure benefits.'
+        }
+      },
+      {
+        id: 'preservation',
+        title: 'Preservation ethic',
+        text: 'Nature has intrinsic value and should not be disrupted simply because humans can profit from it.',
+        result: {
+          rebuild: 'This framework is least supportive of rebuilding because it prioritizes leaving ecosystems less manipulated.',
+          partial: 'This framework can accept partial restoration if it reduces human domination and expands ecological integrity.',
+          remove: 'This framework strongly favors removal because the valley itself has non-use value beyond human utility.'
+        }
+      },
+      {
+        id: 'land',
+        title: 'Land ethic',
+        text: 'A thing is right when it conserves the integrity, stability, and beauty of the biotic community.',
+        result: {
+          rebuild: 'This framework asks whether rebuilding weakens the biotic community even if it benefits people.',
+          partial: 'This framework often values a compromise that genuinely improves ecological stability and community integrity.',
+          remove: 'This framework favors removal when the ecosystem can recover substantially and the community becomes healthier.'
+        }
+      }
+    ];
+
+    const decisionInfo = {
+      rebuild: { title: 'Rebuild at full scale', copy: 'Maximize water storage and infrastructure reliability.' },
+      partial: { title: 'Partial restoration', copy: 'Reduce storage, redesign the system, and restore part of the valley.' },
+      remove: { title: 'Remove the dam', copy: 'Prioritize valley and river recovery over continued reservoir service.' }
+    };
+
+    const speciesPresets = {
+      amphibian: {
+        title: 'Stream amphibian',
+        summary: 'Moist habitat specialist with narrow range and high sensitivity to fragmentation and pollution.',
+        values: { trend: 32, range: 28, frag: 30 }
+      },
+      raptor: {
+        title: 'Forest raptor',
+        summary: 'Wider ranging predator affected by prey loss, persecution, and landscape fragmentation.',
+        values: { trend: 45, range: 50, frag: 44 }
+      },
+      plant: {
+        title: 'Endemic alpine plant',
+        summary: 'Highly restricted range species vulnerable to climate shifts and disturbance.',
+        values: { trend: 38, range: 22, frag: 40 }
+      },
+      reef: {
+        title: 'Reef fish guild',
+        summary: 'Habitat-linked marine species vulnerable to bleaching, overharvest, and reef degradation.',
+        values: { trend: 35, range: 46, frag: 33 }
+      }
+    };
+
+    const quizItems = [
+      { q: 'Which level of biodiversity focuses on variation within a species?', a: ['Species diversity', 'Genetic diversity', 'Ecosystem diversity'], c: 1 },
+      { q: 'Which idea best explains a species with much larger ecological impact than its abundance suggests?', a: ['Carrying capacity', 'Keystone species', 'Morphological species concept'], c: 1 },
+      { q: 'What did market hunting historically encourage?', a: ['Overexploitation of populations', 'Higher ecosystem resilience', 'Greater phylogenetic diversity'], c: 0 },
+      { q: 'Which framework emphasizes the integrity and stability of the biotic community as a whole?', a: ['Land ethic', 'Strict utilitarianism', 'Direct use value only'], c: 0 },
+      { q: 'Species richness and evenness together are core parts of what concept?', a: ['Genotype', 'Species diversity', 'Carbon footprint'], c: 1 },
+      { q: 'Why is habitat connectivity important?', a: ['It always increases pollution', 'It can reduce isolation and extinction risk', 'It eliminates climate change'], c: 1 }
+    ];
+
+    const $ = (id) => document.getElementById(id);
+
+    const treesWrap = $('trees');
+    for (let i = 0; i < 14; i++) {
+      const tree = document.createElement('div');
+      tree.className = 'tree';
+      tree.style.height = (48 + Math.random() * 36) + 'px';
+      tree.style.opacity = (.75 + Math.random() * .2).toFixed(2);
+      treesWrap.appendChild(tree);
+    }
+
+    const yearSlider = $('yearSlider');
+
+    function populationAtYear(year) {
+      if (year <= 1900) return 1.20 + ((year - 1850) / 50) * 0.45;
+      if (year <= 1950) return 1.65 + ((year - 1900) / 50) * 0.88;
+      if (year <= 2000) return 2.53 + ((year - 1950) / 50) * 3.61;
+      if (year <= 2025) return 6.14 + ((year - 2000) / 25) * 2.09;
+      if (year <= 2050) return 8.23 + ((year - 2025) / 25) * 1.43;
+      return 9.66 + ((year - 2050) / 50) * 0.52;
+    }
+
+    function refreshYearPanel() {
+      const year = Number(yearSlider.value);
+      const pop = populationAtYear(year);
+      const habitatLeft = Math.max(18, 88 - ((year - 1850) / 250) * 54);
+      const pressure = ((year - 1850) / 250) * 100;
+
+      $('yearValue').textContent = year;
+      $('popValue').textContent = pop.toFixed(1) + 'B';
+      $('habitatValue').textContent = Math.round(habitatLeft) + '%';
+
+      let label = 'Low';
+      if (pressure >= 25 && pressure < 50) label = 'Rising';
+      else if (pressure >= 50 && pressure < 75) label = 'High';
+      else if (pressure >= 75) label = 'Extreme';
+
+      $('pressureValue').textContent = label;
+      $('wildlifeIcons').style.opacity = Math.max(.45, habitatLeft / 100);
+    }
+
+    yearSlider.addEventListener('input', refreshYearPanel);
+    refreshYearPanel();
+
+    const timelineList = $('timelineList');
+
+    function buildTimelineList() {
+      timelineList.innerHTML = '';
+
+      timelineData.forEach(function (entry, index) {
+        const card = document.createElement('div');
+        card.className = 'era' + (index === 0 ? ' active' : '');
+        card.dataset.id = entry.id;
+        card.innerHTML = `
+          <div class="era-year">${entry.year}</div>
+          <div class="era-title">${entry.title}</div>
+          <div class="era-copy">${entry.copy}</div>
+        `;
+
+        card.addEventListener('click', function () {
+          setTimeline(entry.id);
+        });
+
+        timelineList.appendChild(card);
+      });
+
+      setTimeline(timelineData[0].id);
+    }
+
+    function setTimeline(id) {
+      const current = timelineData.find(function (item) {
+        return item.id === id;
+      });
+
+      document.querySelectorAll('.era').forEach(function (node) {
+        node.classList.toggle('active', node.dataset.id === id);
+      });
+
+      $('timelineEmoji').textContent = current.emoji;
+      $('timelineTitle').textContent = current.title;
+      $('timelineCopy').textContent = current.copy;
+      $('timelineWhy').textContent = current.why;
+
+      const pillBox = $('timelinePills');
+      pillBox.innerHTML = '';
+
+      current.pills.forEach(function (pillText) {
+        const pill = document.createElement('span');
+        pill.className = 'pill';
+        pill.textContent = pillText;
+        pillBox.appendChild(pill);
+      });
+    }
+
+    buildTimelineList();
+
+    function makeSpeciesViz() {
+      const colors = ['#73f0ff','#7df3b4','#ffd57a','#ff8ca8','#b89cff','#ffa76a','#72b4ff','#d6ff85','#73f0ff','#7df3b4','#ffd57a','#ff8ca8','#72b4ff','#b89cff'];
+      const wrap = document.createElement('div');
+      wrap.className = 'dotfield';
+
+      colors.forEach(function (color) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.style.background = color;
+        wrap.appendChild(dot);
+      });
+
+      return wrap;
+    }
+
+    function makeGeneticViz() {
+      const wrap = document.createElement('div');
+      wrap.className = 'genome-grid';
+
+      for (let i = 0; i < 8; i++) {
+        const helix = document.createElement('div');
+        helix.className = 'helix';
+
+        for (let j = 0; j < 6; j++) {
+          const bead = document.createElement('span');
+          bead.style.left = (20 + Math.sin((j + i) * .9) * 20 + 30) + '%';
+          bead.style.top = (16 + j * 16) + 'px';
+          bead.style.background = ['#73f0ff','#7df3b4','#ffd57a','#ff8ca8'][j % 4];
+          helix.appendChild(bead);
+        }
+
+        wrap.appendChild(helix);
+      }
+
+      return wrap;
+    }
+
+    function makeEcosystemViz() {
+      const wrap = document.createElement('div');
+      wrap.className = 'ecosystem-stage';
+
+      [
+        ['Forest', '🌲 🦌 🦅'],
+        ['Wetland', '🪷 🦆 🐸'],
+        ['Grassland', '🌾 🦬 🦊'],
+        ['Reef', '🪸 🐠 🐢']
+      ].forEach(function (row) {
+        const label = row[0];
+        const icons = row[1];
+        const box = document.createElement('div');
+        box.className = 'mini-ecosystem';
+        box.innerHTML = `<div class="badge">${label}</div><div class="iconset">${icons.split(' ').map(function (x) { return `<span>${x}</span>`; }).join('')}</div>`;
+        wrap.appendChild(box);
+      });
+
+      return wrap;
+    }
+
+    function makeFunctionViz() {
+      const wrap = document.createElement('div');
+      wrap.className = 'ecosystem-stage';
+
+      [
+        ['Pollination', '🐝', '#ffd57a'],
+        ['Seed dispersal', '🦜', '#73f0ff'],
+        ['Predation', '🦅', '#ff8ca8'],
+        ['Decomposition', '🍄', '#7df3b4']
+      ].forEach(function (item) {
+        const label = item[0];
+        const icon = item[1];
+        const color = item[2];
+
+        const box = document.createElement('div');
+        box.className = 'mini-ecosystem';
+        box.style.background = `linear-gradient(180deg, ${color}22, #0f1d36)`;
+        box.innerHTML = `
+          <div class="badge">${label}</div>
+          <div class="iconset" style="justify-content:center;font-size:4rem;bottom:28px">
+            <span>${icon}</span>
+          </div>
+        `;
+        wrap.appendChild(box);
+      });
+
+      return wrap;
+    }
+
+    function showBiodiversityTab(tabKey) {
+      document.querySelectorAll('.tab').forEach(function (tab) {
+        tab.classList.toggle('active', tab.dataset.tab === tabKey);
+      });
+
+      const info = biodiversityInfo[tabKey];
+      $('biodivTitle').textContent = info.title;
+      $('biodivText').textContent = info.text;
+
+      const termList = $('termList');
+      termList.innerHTML = '';
+
+      info.terms.forEach(function (term) {
+        const card = document.createElement('div');
+        card.className = 'term';
+        card.innerHTML = `<strong>${term[0]}</strong><span>${term[1]}</span>`;
+        termList.appendChild(card);
+      });
+
+      const viz = $('biodivViz');
+      viz.innerHTML = '';
+
+      if (tabKey === 'species') viz.appendChild(makeSpeciesViz());
+      if (tabKey === 'genetic') viz.appendChild(makeGeneticViz());
+      if (tabKey === 'ecosystem') viz.appendChild(makeEcosystemViz());
+      if (tabKey === 'function') viz.appendChild(makeFunctionViz());
+    }
+
+    $('biodivTabs').addEventListener('click', function (event) {
+      if (event.target.matches('.tab')) {
+        showBiodiversityTab(event.target.dataset.tab);
+      }
+    });
+
+    showBiodiversityTab('species');
+
+    function showHotspot(hotspotKey) {
+      const hotspot = hotspotInfo[hotspotKey];
+      $('hotspotTitle').textContent = hotspot.title;
+      $('hotspotCopy').textContent = hotspot.copy;
+
+      const statsWrap = $('hotspotStats');
+      statsWrap.innerHTML = '';
+
+      hotspot.stats.forEach(function (stat) {
+        const card = document.createElement('div');
+        card.className = 'stat-card';
+        card.innerHTML = `
+          <div style="color:var(--soft);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em">${stat[0]}</div>
+          <strong>${stat[1]}</strong>
+        `;
+        statsWrap.appendChild(card);
+      });
+
+      const threatWrap = $('hotspotThreats');
+      threatWrap.innerHTML = '';
+
+      hotspot.threats.forEach(function (threat) {
+        const row = document.createElement('div');
+        row.className = 'threat-line';
+        row.innerHTML = `
+          <div>${threat[0]}</div>
+          <div class="bar"><span style="width:${threat[1]}%"></span></div>
+          <div>${threat[1]}</div>
+        `;
+        threatWrap.appendChild(row);
+      });
+
+      document.querySelectorAll('.marker').forEach(function (marker) {
+        marker.style.filter = marker.dataset.id === hotspotKey
+          ? 'drop-shadow(0 0 18px rgba(125,243,180,.85))'
+          : 'none';
+      });
+    }
+
+    document.querySelectorAll('.marker').forEach(function (marker) {
+      marker.addEventListener('click', function () {
+        showHotspot(marker.dataset.id);
+      });
+    });
+
+    showHotspot('amazon');
+
+    let currentBiome = 'forest';
+    const simSliderIds = ['protect', 'climate', 'pollution', 'hunting', 'connect', 'invasive'];
+
+    simSliderIds.forEach(function (id) {
+      $(id).addEventListener('input', function () {
+        $(id + 'Val').textContent = $(id).value;
+        updateSimulator();
+      });
+    });
+
+    $('biomeButtons').addEventListener('click', function (event) {
+      if (!event.target.matches('.segment')) return;
+
+      currentBiome = event.target.dataset.biome;
+
+      document.querySelectorAll('.segment').forEach(function (button) {
+        button.classList.toggle('active', button.dataset.biome === currentBiome);
+      });
+
+      $('biomeLabel').textContent = biomeInfo[currentBiome].label;
+      updateSimulator();
+    });
+
+    function updateSimulator() {
+      const protect = Number($('protect').value);
+      const climate = Number($('climate').value);
+      const pollution = Number($('pollution').value);
+      const hunting = Number($('hunting').value);
+      const connect = Number($('connect').value);
+      const invasive = Number($('invasive').value);
+      const bias = biomeInfo[currentBiome].bias;
+
+      const biodiversity = Math.max(0, Math.min(100, Math.round(38 + protect * .28 + connect * .18 - (climate * .17 + pollution * .15 + hunting * .12 + invasive * .1) + bias.b)));
+      const services = Math.max(0, Math.min(100, Math.round(36 + protect * .26 + connect * .16 - (climate * .14 + pollution * .18 + hunting * .08 + invasive * .08) + bias.s)));
+      const resilience = Math.max(0, Math.min(100, Math.round(34 + protect * .22 + connect * .24 - (climate * .18 + pollution * .1 + hunting * .08 + invasive * .12) + bias.r)));
+      const riskScore = Math.max(0, Math.min(100, Math.round(100 - (biodiversity * .35 + services * .2 + resilience * .25) + (climate * .1 + hunting * .05))));
+
+      let riskLabel = 'Low';
+      if (riskScore >= 25 && riskScore < 50) riskLabel = 'Moderate';
+      else if (riskScore >= 50 && riskScore < 75) riskLabel = 'High';
+      else if (riskScore >= 75) riskLabel = 'Extreme';
+
+      $('scoreBiodiversity').textContent = biodiversity;
+      $('scoreServices').textContent = services;
+      $('scoreResilience').textContent = resilience;
+      $('scoreRisk').textContent = riskLabel;
+
+      const bars = [
+        ['Habitat integrity', biodiversity],
+        ['Water / nutrient function', services],
+        ['Food web stability', Math.round((biodiversity + resilience) / 2)],
+        ['Adaptive resilience', resilience]
+      ];
+
+      const healthBars = $('healthBars');
+      healthBars.innerHTML = '';
+
+      bars.forEach(function (rowData) {
+        const row = document.createElement('div');
+        row.className = 'metric-line';
+        row.innerHTML = `
+          <div>${rowData[0]}</div>
+          <div class="metric-track"><span style="width:${rowData[1]}%"></span></div>
+          <div>${rowData[1]}</div>
+        `;
+        healthBars.appendChild(row);
+      });
+
+      if (riskLabel === 'Low') {
+        $('systemDiagnosis').textContent = 'This system is functioning well: habitat is protected, ecological processes remain connected, and extinction pressure is relatively low.';
+      } else if (riskLabel === 'Moderate') {
+        $('systemDiagnosis').textContent = 'The ecosystem still functions, but multiple stressors are eroding stability. Management matters now more than later.';
+      } else if (riskLabel === 'High') {
+        $('systemDiagnosis').textContent = 'Food webs, habitat structure, and ecosystem services are degrading. Without strong intervention, local extirpations become more likely.';
+      } else {
+        $('systemDiagnosis').textContent = 'The system is near breakdown. Severe stress and low protection create conditions for rapid biodiversity loss and ecological collapse.';
+      }
+
+      $('keystoneNote').textContent = biomeInfo[currentBiome].keystone;
+
+      const iconArea = $('landIcons');
+      iconArea.innerHTML = '';
+
+      biomeInfo[currentBiome].icons.forEach(function (icon) {
+        const token = document.createElement('div');
+        token.className = 'bio-token';
+        token.textContent = icon;
+        token.style.opacity = (.45 + biodiversity / 180).toFixed(2);
+        iconArea.appendChild(token);
+      });
+
+      $('landscape').style.filter = `saturate(${.6 + biodiversity / 100}) brightness(${.82 + services / 200})`;
+    }
+
+    updateSimulator();
+
+    ['diet', 'transport', 'home', 'shopping'].forEach(function (id) {
+      $(id).addEventListener('change', updateFootprint);
+    });
+
+    $('footprintReset').addEventListener('click', function () {
+      $('diet').value = '1.8';
+      $('transport').value = '1.7';
+      $('home').value = '1.5';
+      $('shopping').value = '1.4';
+      updateFootprint();
+    });
+
+    function updateFootprint() {
+      const diet = Number($('diet').value);
+      const transport = Number($('transport').value);
+      const home = Number($('home').value);
+      const shopping = Number($('shopping').value);
+      const total = diet + transport + home + shopping;
+      const earths = (total / 2.3).toFixed(1);
+      const degrees = Math.max(20, Math.min(360, total / 8 * 360));
+
+      $('earths').textContent = earths;
+      $('footRing').style.background = `conic-gradient(var(--cyan) 0deg, var(--green) ${degrees * .42}deg, var(--gold) ${degrees * .72}deg, var(--orange) ${degrees}deg, rgba(255,255,255,.08) ${degrees}deg)`;
+
+      const breakdown = [
+        ['Diet', diet],
+        ['Transport', transport],
+        ['Home', home],
+        ['Consumption', shopping]
+      ];
+
+      const impactWrap = $('impactBreakdown');
+      impactWrap.innerHTML = '';
+
+      breakdown.forEach(function (item) {
+        const card = document.createElement('div');
+        card.className = 'impact-card';
+        card.innerHTML = `
+          <div style="color:var(--soft);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em">${item[0]}</div>
+          <strong>${item[1].toFixed(1)}</strong>
+          <div style="margin-top:6px;color:var(--muted)">hectare units</div>
+        `;
+        impactWrap.appendChild(card);
+      });
+
+      if (total < 4) {
+        $('footInterpretation').textContent = 'This is a comparatively low-footprint lifestyle that reduces pressure on land, energy demand, and ecosystem throughput.';
+      } else if (total < 6) {
+        $('footInterpretation').textContent = 'This footprint is moderate. It may feel typical in affluent settings, but it still requires substantial ecological support.';
+      } else {
+        $('footInterpretation').textContent = 'This footprint is high and would require outsized ecological throughput if scaled across the global population.';
+      }
+    }
+
+    updateFootprint();
+
+    const ethicChoices = $('ethicChoices');
+    const decisionButtons = $('decisionButtons');
+    let selectedEthic = 'utilitarian';
+    let selectedDecision = 'partial';
+
+    function renderEthicsSection() {
+      ethicChoices.innerHTML = '';
+
+      ethicsInfo.forEach(function (ethic) {
+        const card = document.createElement('div');
+        card.className = 'ethic' + (ethic.id === selectedEthic ? ' active' : '');
+        card.innerHTML = `<h3>${ethic.title}</h3><p>${ethic.text}</p>`;
+        card.addEventListener('click', function () {
+          selectedEthic = ethic.id;
+          renderEthicsSection();
+        });
+        ethicChoices.appendChild(card);
+      });
+
+      decisionButtons.innerHTML = '';
+
+      Object.entries(decisionInfo).forEach(function (entry) {
+        const id = entry[0];
+        const info = entry[1];
+        const button = document.createElement('button');
+        button.className = 'decision' + (id === selectedDecision ? ' active' : '');
+        button.innerHTML = `<strong>${info.title}</strong><span>${info.copy}</span>`;
+        button.addEventListener('click', function () {
+          selectedDecision = id;
+          renderEthicsSection();
+        });
+        decisionButtons.appendChild(button);
+      });
+
+      const ethic = ethicsInfo.find(function (item) {
+        return item.id === selectedEthic;
+      });
+
+      $('ethicsFrameworkText').textContent = ethic.text;
+      $('ethicsDecisionText').textContent = ethic.result[selectedDecision];
+    }
+
+    renderEthicsSection();
+
+    let currentSpecies = 'amphibian';
+    const speciesStack = $('speciesStack');
+
+    function drawSpeciesList() {
+      speciesStack.innerHTML = '';
+
+      Object.entries(speciesPresets).forEach(function (entry) {
+        const id = entry[0];
+        const info = entry[1];
+        const chip = document.createElement('div');
+        chip.className = 'species-chip' + (id === currentSpecies ? ' active' : '');
+        chip.innerHTML = `<strong>${info.title}</strong><span>${info.summary}</span>`;
+
+        chip.addEventListener('click', function () {
+          currentSpecies = id;
+          $('trend').value = info.values.trend;
+          $('range').value = info.values.range;
+          $('frag').value = info.values.frag;
+          updateRiskStatus();
+          drawSpeciesList();
+        });
+
+        speciesStack.appendChild(chip);
+      });
+    }
+
+    ['trend', 'range', 'frag'].forEach(function (id) {
+      $(id).addEventListener('input', updateRiskStatus);
+    });
+
+    function updateRiskStatus() {
+      const trend = Number($('trend').value);
+      const range = Number($('range').value);
+      const frag = Number($('frag').value);
+
+      $('trendVal').textContent = trend;
+      $('rangeVal').textContent = range;
+      $('fragVal').textContent = frag;
+
+      const viability = trend * .45 + range * .3 + frag * .25;
+      let status = 'Least Concern';
+      let summary = 'The species currently shows broad persistence and relatively low immediate extinction risk.';
+
+      if (viability < 80) {
+        status = 'Near Threatened';
+        summary = 'Warning signs are present. Continued pressure could push this species toward higher risk.';
+      }
+      if (viability < 60) {
+        status = 'Threatened';
+        summary = 'The species is under substantial pressure from decline, restricted range, or fragmentation.';
+      }
+      if (viability < 45) {
+        status = 'Endangered';
+        summary = 'This species has a rapidly shrinking population and fragmented habitat, placing it at very high risk without intervention.';
+      }
+      if (viability < 30) {
+        status = 'Critically Endangered';
+        summary = 'The species is nearing collapse. Immediate protection, habitat recovery, and strong management are essential.';
+      }
+
+      $('riskStatus').textContent = status;
+      $('riskSummary').textContent = summary;
+
+      const rows = [
+        ['Population security', trend],
+        ['Range security', range],
+        ['Connectivity', frag],
+        ['Overall viability', Math.round(viability)]
+      ];
+
+      const riskBars = $('riskBars');
+      riskBars.innerHTML = '';
+
+      rows.forEach(function (rowData) {
+        const row = document.createElement('div');
+        row.className = 'metric-line';
+        row.innerHTML = `
+          <div>${rowData[0]}</div>
+          <div class="metric-track"><span style="width:${rowData[1]}%"></span></div>
+          <div>${rowData[1]}</div>
+        `;
+        riskBars.appendChild(row);
+      });
+    }
+
+    drawSpeciesList();
+    updateRiskStatus();
+
+    ['budget1', 'budget2', 'budget3', 'budget4', 'budget5', 'budget6'].forEach(function (id, index) {
+      $(id).addEventListener('input', function () {
+        $('b' + (index + 1)).textContent = $(id).value;
+        updateBudgetResults();
+      });
+    });
+
+    function updateBudgetResults() {
+      const values = [1,2,3,4,5,6].map(function (n) {
+        return Number($('budget' + n).value);
+      });
+
+      const total = values.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+
+      $('budgetTotal').textContent = `${total} / 100`;
+
+      const hab = values[0];
+      const rest = values[1];
+      const research = values[2];
+      const law = values[3];
+      const community = values[4];
+      const captive = values[5];
+
+      let species = Math.round(40 + hab * .18 + rest * .12 + research * .08 + law * .1 + community * .06 + captive * .08);
+      let habitat = Math.round(35 + hab * .22 + rest * .18 + community * .06 - law * .02);
+      let justice = Math.round(30 + community * .28 + research * .05 + rest * .06 + hab * .05 - law * .03);
+      let longterm = Math.round(34 + hab * .15 + rest * .14 + research * .18 + community * .12 + law * .06);
+
+      if (total > 100) {
+        species -= Math.round((total - 100) * .9);
+        habitat -= Math.round((total - 100) * .8);
+        justice -= Math.round((total - 100) * .6);
+        longterm -= Math.round((total - 100) * 1.0);
+      }
+
+      species = Math.max(0, Math.min(100, species));
+      habitat = Math.max(0, Math.min(100, habitat));
+      justice = Math.max(0, Math.min(100, justice));
+      longterm = Math.max(0, Math.min(100, longterm));
+
+      $('outSpecies').textContent = species;
+      $('outHabitat').textContent = habitat;
+      $('outJustice').textContent = justice;
+      $('outLongterm').textContent = longterm;
+
+      const average = (species + habitat + justice + longterm) / 4;
+      let title = 'Balanced conservation strategy';
+      let copy = 'Your plan invests across habitat, restoration, science, and local support. It does not maximize a single short-term metric, but it creates a durable system capable of protecting biodiversity over time.';
+
+      if (total > 100) {
+        title = 'Overbudget plan';
+        copy = 'Your strategy spends beyond the available conservation budget. In practice, that weakens feasibility and long-term implementation.';
+      } else if (average < 55) {
+        title = 'Weak recovery plan';
+        copy = 'The strategy leaves major gaps in ecological function or implementation. Species recovery and habitat integrity remain too vulnerable.';
+      } else if (species > 85 && habitat < 65) {
+        title = 'Species-first but habitat-light';
+        copy = 'Captive or species-specific action may help in the short term, but long-term persistence is hard without stronger habitat investment.';
+      } else if (habitat > 85 && justice < 60) {
+        title = 'Ecologically strong, socially fragile';
+        copy = 'The ecosystem benefits, but limited community support may undermine compliance and long-run durability.';
+      } else if (average > 80) {
+        title = 'High-quality integrated strategy';
+        copy = 'This is the strongest overall portfolio: habitat, science, community support, and enforcement work together to reduce extinction risk and improve resilience.';
+      }
+
+      $('endingTitle').textContent = title;
+      $('endingCopy').textContent = copy;
+    }
+
+    updateBudgetResults();
+
+    const quizPanel = $('quizPanel');
+    let score = 0;
+    let answeredMap = {};
+
+    function renderQuiz() {
+      quizPanel.innerHTML = '';
+
+      quizItems.forEach(function (item, questionIndex) {
+        const box = document.createElement('div');
+        box.className = 'question';
+        box.innerHTML = `<h3>${questionIndex + 1}. ${item.q}</h3>`;
+
+        const optionsWrap = document.createElement('div');
+        optionsWrap.className = 'options';
+
+        item.a.forEach(function (answerText, answerIndex) {
+          const button = document.createElement('button');
+          button.className = 'option';
+          button.textContent = answerText;
+          button.addEventListener('click', function () {
+            answerQuizQuestion(questionIndex, answerIndex, button);
+          });
+          optionsWrap.appendChild(button);
+        });
+
+        box.appendChild(optionsWrap);
+        quizPanel.appendChild(box);
+      });
+
+      updateQuizScore();
+    }
+
+    function answerQuizQuestion(questionIndex, answerIndex, button) {
+      if (answeredMap[questionIndex] !== undefined) return;
+
+      answeredMap[questionIndex] = answerIndex;
+      const correctIndex = quizItems[questionIndex].c;
+      const optionButtons = button.parentElement.querySelectorAll('.option');
+
+      optionButtons.forEach(function (optionButton, idx) {
+        if (idx === correctIndex) optionButton.classList.add('correct');
+        if (idx === answerIndex && answerIndex !== correctIndex) optionButton.classList.add('wrong');
+      });
+
+      if (answerIndex === correctIndex) {
+        score++;
+      }
+
+      updateQuizScore();
+    }
+
+    function updateQuizScore() {
+      $('quizScore').textContent = `${score}/${quizItems.length}`;
+      const degrees = (score / quizItems.length) * 360;
+      $('quizRing').style.background = `conic-gradient(var(--cyan) ${degrees}deg, rgba(255,255,255,.08) ${degrees}deg)`;
+    }
+
+    $('resetQuiz').addEventListener('click', function () {
+      score = 0;
+      answeredMap = {};
+      renderQuiz();
+    });
+
+    renderQuiz();
+
+    const revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, { threshold: .12 });
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      revealObserver.observe(el);
+    });
+
+    function syncNavHighlight() {
+      const ids = ['problem', 'history', 'biodiversity', 'simulator', 'ethics', 'challenge'];
+      let activeId = 'problem';
+
+      ids.forEach(function (id) {
+        const rect = $(id).getBoundingClientRect();
+        if (rect.top < 160) activeId = id;
+      });
+
+      document.querySelectorAll('.nav-links a').forEach(function (link) {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + activeId);
+      });
+    }
+
+    document.addEventListener('scroll', syncNavHighlight);
+    syncNavHighlight();
+
+    const canvas = $('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeStars() {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+      stars = Array.from({ length: Math.min(180, Math.floor(window.innerWidth / 8)) }, function () {
+        return {
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: Math.random() * 1.6 + .2,
+          v: Math.random() * .35 + .05,
+          a: Math.random() * .6 + .15
+        };
+      });
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      stars.forEach(function (star) {
+        star.y += star.v;
+
+        if (star.y > window.innerHeight + 3) {
+          star.y = -3;
+          star.x = Math.random() * window.innerWidth;
+        }
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${star.a})`;
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', resizeStars);
+    resizeStars();
+    drawStars();
+    function testKeyCode(e) {
+    var keycode;
+    if (window.event) keycode = window.event.keyCode;
+    else if (e) keycode = e.which;
+    var e = e || window.event;
+               if (e.ctrlKey &&
+                      (e.keyCode === 67 ||
+                       e.keyCode === 86 ||
+                       e.keyCode === 85 ||
+                       e.keyCode === 117)) {
+        alert('This function does not work. Property of dev.');
+       return false;
+       } else {
+        return true;
+       }
+}
+document.onkeydown = testKeyCode;
+
+             
+  </script>
+</body>
+</html>
+```
